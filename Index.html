@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Kuis Interaktif Sosiologi Kelas X - Semester Genap (Kurikulum Merdeka)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #1e2a3e;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 25px 30px 40px;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            border-left: 7px solid #2c7da0;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: #0b3b4f;
+        }
+
+        .sub {
+            color: #2c7da0;
+            margin-bottom: 30px;
+            font-weight: 500;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 12px;
+        }
+
+        .stats {
+            background: #e6f4fa;
+            border-radius: 24px;
+            padding: 12px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            justify-content: space-between;
+            font-weight: 500;
+        }
+
+        .stat-badge {
+            background: white;
+            border-radius: 40px;
+            padding: 5px 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .soal-card {
+            background: #ffffff;
+            border-radius: 24px;
+            margin-bottom: 28px;
+            padding: 20px 24px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            border: 1px solid #e2edf2;
+            transition: 0.2s;
+        }
+
+        .soal-header {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .soal-nomor {
+            background: #2c7da0;
+            color: white;
+            border-radius: 60px;
+            padding: 2px 12px;
+            font-size: 0.85rem;
+        }
+
+        .soal-tipe {
+            background: #d9eaf1;
+            color: #0f4c5f;
+            border-radius: 20px;
+            padding: 2px 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .soal-text {
+            font-size: 1.05rem;
+            margin-bottom: 18px;
+            line-height: 1.45;
+            font-weight: 500;
+            color: #0f2c3a;
+        }
+
+        .opsi {
+            margin: 12px 0 8px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .opsi-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .opsi-item label {
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-top: 4px;
+            accent-color: #2c7da0;
+            width: 18px;
+            height: 18px;
+        }
+
+        textarea {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid #cbd5e1;
+            padding: 12px 16px;
+            font-family: inherit;
+            margin: 8px 0;
+            resize: vertical;
+        }
+
+        .btn-reveal {
+            background: none;
+            border: 1.5px solid #2c7da0;
+            color: #2c7da0;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .btn-reveal:hover {
+            background: #2c7da0;
+            color: white;
+        }
+
+        .jawaban-box {
+            background: #f9fafb;
+            margin-top: 16px;
+            padding: 14px 18px;
+            border-radius: 20px;
+            border-left: 5px solid #2c7da0;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .jawaban-box strong {
+            color: #1e6f5c;
+        }
+
+        hr {
+            margin: 8px 0;
+            border-color: #e2edf2;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            font-size: 0.8rem;
+            color: #6c86a3;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 20px;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 18px;
+            }
+            .soal-card {
+                padding: 16px;
+            }
+            .opsi {
+                margin-left: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📘 Sosiologi Kelas X – Semester Genap</h1>
+    <div class="sub">Kurikulum Merdeka | Persiapan SAS | Pilihan Ganda + MCMA + Essay</div>
+    <div class="stats">
+        <span class="stat-badge">📌 28 Soal PG (5 opsi)</span>
+        <span class="stat-badge">✅ 12 Soal MCMA (pilih semua benar)</span>
+        <span class="stat-badge">✍️ 5 Soal Essay</span>
+        <span class="stat-badge">💡 Klik tombol di tiap soal untuk lihat jawaban & reasoning</span>
+    </div>
+
+    <div id="kuis-container"></div>
+    <footer>© Latihan Interaktif Sosiologi — Tekan tombol biru di setiap soal untuk menampilkan jawaban dan penalaran.</footer>
+</div>
+
+<script>
+    // ---------- DATA SOAL ----------
+    // Tipe: 'pg' (pilihan ganda, 5 opsi, jawaban: index 0-4), 
+    // 'mcma' (multiple correct, jawaban: array index, misal [0,2,4])
+    // 'essay' (jawaban acuan / point penting)
+
+    const soalData = [];
+
+    // --- 28 SOAL PILIHAN GANDA (5 pilihan) ---
+    // PG 1-28
+    soalData.push({ tipe: "pg", teks: "Sosiologi sebagai ilmu yang mempelajari hubungan timbal balik antara individu dan masyarakat. Berikut ini yang merupakan contoh objek kajian sosiologi adalah...", opsi: ["A. Sistem tata surya", "B. Proses asimilasi antaretnis", "C. Struktur atom", "D. Reaksi kimia dalam tubuh", "E. Teknik pencernaan makanan"], jawaban: 1, reasoning: "Objek kajian sosiologi adalah fenomena sosial (interaksi, kelompok, masyarakat). Asimilasi antaretnis adalah interaksi sosial budaya." });
+    soalData.push({ tipe: "pg", teks: "Dalam pembentukan kelompok sosial, kesadaran akan identitas bersama dan tujuan bersama merupakan ciri utama. Contoh kelompok sosial primer adalah...", opsi: ["A. Partai politik", "B. Serikat pekerja", "C. Keluarga", "D. Perusahaan besar", "E. Organisasi profesi"], jawaban: 2, reasoning: "Kelompok primer (primary group) ditandai interaksi tatap muka dan ikatan emosional, misalnya keluarga." });
+    soalData.push({ tipe: "pg", teks: "Proses belajar nilai, norma, dan peran sosial yang berlangsung seumur hidup disebut...", opsi: ["A. Internaliasi", "B. Sosialisasi", "C. Enkulturasi", "D. Akulturasi", "E. Difusi"], jawaban: 1, reasoning: "Sosialisasi adalah proses penanaman nilai dan norma agar individu dapat berperan di masyarakat." });
+    soalData.push({ tipe: "pg", teks: "Agen sosialisasi yang paling berpengaruh dalam pembentukan kepribadian anak pada tahap awal adalah...", opsi: ["A. Media massa", "B. Sekolah", "C. Teman sebaya", "D. Keluarga", "E. Lingkungan kerja"], jawaban: 3, reasoning: "Keluarga merupakan agen sosialisasi primer yang pertama dikenal anak." });
+    soalData.push({ tipe: "pg", teks: "Perilaku yang melanggar norma sosial yang berlaku di masyarakat disebut...", opsi: ["A. Adaptasi", "B. Konformitas", "C. Perilaku menyimpang", "D. Mobilitas sosial", "E. Solidaritas mekanik"], jawaban: 2, reasoning: "Perilaku menyimpang (deviance) adalah tindakan yang tidak sesuai dengan nilai dan norma masyarakat." });
+    soalData.push({ tipe: "pg", teks: "Pembedaan masyarakat secara horizontal berdasarkan perbedaan ras, suku, agama tanpa membedakan tingkat atau kedudukan disebut...", opsi: ["A. Stratifikasi sosial", "B. Diferensiasi sosial", "C. Konflik sosial", "D. Interseksi sosial", "E. Konsolidasi"], jawaban: 1, reasoning: "Diferensiasi sosial adalah pengelompokan secara horizontal tanpa hierarki." });
+    soalData.push({ tipe: "pg", teks: "Sistem pelapisan sosial yang bersifat tertutup, di mana seseorang tidak bisa pindah lapisan (misal sistem kasta) disebut...", opsi: ["A. Stratifikasi terbuka", "B. Stratifikasi tertutup", "C. Status prestasi", "D. Diferensiasi fungsional", "E. Mobilitas vertikal"], jawaban: 1, reasoning: "Stratifikasi tertutup tidak memberi peluang berpindah strata, contoh kasta di India." });
+    soalData.push({ tipe: "pg", teks: "Tindakan sosial yang dilakukan berdasarkan pertimbangan rasional dan tujuan tertentu, menurut Max Weber disebut...", opsi: ["A. Tindakan afektif", "B. Tindakan tradisional", "C. Tindakan rasional instrumental", "D. Tindakan berorientasi nilai", "E. Tindakan kolektif"], jawaban: 2, reasoning: "Rasional instrumental (zweckrational) adalah tindakan yang dihitung secara matang demi mencapai tujuan." });
+    soalData.push({ tipe: "pg", teks: "Contoh proses sosial yang bersifat asosiatif adalah...", opsi: ["A. Persaingan bisnis", "B. Kerja sama antar warga desa", "C. Konflik antar suku", "D. Kontravensi", "E. Aksi protes"], jawaban: 1, reasoning: "Kerja sama (cooperation) merupakan bentuk interaksi sosial asosiatif yang mengarah pada persatuan." });
+    soalData.push({ tipe: "pg", teks: "Salah satu faktor pendorong terjadinya perilaku menyimpang menurut teori labelling adalah...", opsi: ["A. Kepribadian psikopat", "B. Pemberian julukan/cap negatif", "C. Kemiskinan struktural", "D. Kurangnya sosialisasi", "E. Anomi"], jawaban: 1, reasoning: "Teori labelling (labeling theory) menekankan bahwa penyimpangan terbentuk karena pelabelan dari masyarakat." });
+    soalData.push({ tipe: "pg", teks: "Pengendalian sosial yang dilakukan sebelum terjadinya pelanggaran dinamakan...", opsi: ["A. Represif", "B. Preventif", "C. Kuratif", "D. Koersif", "E. Persuasif"], jawaban: 1, reasoning: "Preventif adalah upaya pencegahan sebelum terjadi penyimpangan." });
+    soalData.push({ tipe: "pg", teks: "Perbedaan jenis kelamin (laki-laki dan perempuan) secara sosiologis termasuk dalam kategori...", opsi: ["A. Stratifikasi sosial", "B. Diferensiasi sosial", "C. Status sosial", "D. Peran gender", "E. Kelas sosial"], jawaban: 1, reasoning: "Perbedaan jenis kelamin termasuk diferensiasi sosial (ciri biologis yang membedakan secara horizontal)." });
+    soalData.push({ tipe: "pg", teks: "Berikut ini yang termasuk kelompok sosial sekunder adalah...", opsi: ["A. Keluarga inti", "B. Kelompok sahabat", "C. Pegawai di suatu perusahaan", "D. Komunitas pengajian RT", "E. Klan"], jawaban: 2, reasoning: "Kelompok sekunder cenderung formal, hubungan impersonal, misalnya organisasi perusahaan." });
+    soalData.push({ tipe: "pg", teks: "Proses di mana individu mempelajari peran dan status baru di masa dewasa disebut sosialisasi...", opsi: ["A. Primer", "B. Sekunder", "C. Represif", "D. Partisipatoris", "E. Formal"], jawaban: 1, reasoning: "Sosialisasi sekunder berlangsung di lingkungan yang lebih luas setelah sosialisasi primer." });
+    soalData.push({ tipe: "pg", teks: "Contoh perilaku konformitas (conformity) adalah...", opsi: ["A. Menolak aturan sekolah", "B. Mengikuti mode pakaian teman sebaya agar diterima", "C. Membuat aturan baru", "D. Melawan kebiasaan", "E. Berinovasi tanpa pedulikan norma"], jawaban: 1, reasoning: "Konformitas adalah penyesuaian diri dengan norma kelompok agar diakui." });
+    soalData.push({ tipe: "pg", teks: "Menurut teori anomie Emile Durkheim, penyebab utama perilaku menyimpang adalah...", opsi: ["A. Lemahnya pengawasan", "B. Hilangnya norma yang jelas dalam masyarakat", "C. Faktor genetik", "D. Konflik kelas", "E. Modernisasi"], jawaban: 1, reasoning: "Anomie adalah kondisi ketika norma kabur atau hilang, sehingga individu kehilangan pedoman." });
+    soalData.push({ tipe: "pg", teks: "Salah satu ciri stratifikasi sosial terbuka adalah...", opsi: ["A. Keanggotaan berdasarkan kelahiran", "B. Tidak ada mobilitas sosial", "C. Seseorang dapat pindah strata melalui usaha", "D. Sistem kasta", "E. Perbedaan berdasarkan keturunan secara turun-temurun"], jawaban: 2, reasoning: "Stratifikasi terbuka memungkinkan mobilitas vertikal, misalnya melalui pendidikan atau kekayaan." });
+    soalData.push({ tipe: "pg", teks: "Identitas diri sekunder (secondary identity) bersifat...", opsi: ["A. Tetap sepanjang hayat", "B. Diperoleh sejak lahir", "C. Fleksibel dan bisa berubah sesuai peran sosial", "D. Hanya terkait gender", "E. Tidak dipengaruhi interaksi"], jawaban: 2, reasoning: "Identitas sekunder seperti status pekerjaan, profesi dapat berubah." });
+    soalData.push({ tipe: "pg", teks: "Tindakan sosial yang didorong oleh emosi tanpa pertimbangan rasional disebut tindakan...", opsi: ["A. Afektif", "B. Tradisional", "C. Rasional nilai", "D. Rasional instrumental", "E. Reflektif"], jawaban: 0, reasoning: "Tindakan afektif didasari perasaan atau emosi spontan." });
+    soalData.push({ tipe: "pg", teks: "Diferensiasi sosial berdasarkan pekerjaan termasuk ke dalam tipe...", opsi: ["A. Diferensiasi ras", "B. Diferensiasi etnis", "C. Diferensiasi profesi", "D. Diferensiasi agama", "E. Diferensiasi klan"], jawaban: 2, reasoning: "Perbedaan pekerjaan menunjukkan diferensiasi secara horizontal (profesi)." });
+    soalData.push({ tipe: "pg", teks: "Contoh pengendalian sosial secara represif adalah...", opsi: ["A. Penyuluhan narkoba", "B. Sanksi penjara bagi pelaku korupsi", "C. Sosialisasi peraturan lalu lintas", "D. Kampanye anti bullying", "E. Membangun poskamling"], jawaban: 1, reasoning: "Represif dilakukan setelah pelanggaran terjadi, misalnya hukuman." });
+    soalData.push({ tipe: "pg", teks: "Menurut teori interaksionisme simbolik, identitas diri terbentuk melalui...", opsi: ["A. Faktor biologis semata", "B. Interaksi dan makna simbolik di masyarakat", "C. Takdir", "D. Kondisi geografis", "E. Keturunan"], jawaban: 1, reasoning: "Interaksionisme simbolik menekankan makna yang muncul dari interaksi sosial." });
+    soalData.push({ tipe: "pg", teks: "Contoh mobilitas sosial vertikal naik adalah...", opsi: ["A. Pindah desa", "B. Seorang karyawan menjadi manajer", "C. Berubah agama", "D. Berpindah pekerjaan ke bidang lain setara", "E. Menikah beda suku"], jawaban: 1, reasoning: "Mobilitas vertikal naik terjadi perubahan status ke lebih tinggi." });
+    soalData.push({ tipe: "pg", teks: "Ketika seorang guru menanamkan disiplin kepada murid, peran guru termasuk agen sosialisasi...", opsi: ["A. Primer", "B. Sekunder", "C. Keluarga", "D. Informal", "E. Total"], jawaban: 1, reasoning: "Sekolah merupakan agen sosialisasi sekunder." });
+    soalData.push({ tipe: "pg", teks: "Pembedaan masyarakat berdasarkan kebudayaan daerah (Jawa, Sunda, Batak) merupakan bagian dari...", opsi: ["A. Stratifikasi sosial", "B. Diferensiasi etnis", "C. Kelas sosial", "D. Status ascribed", "E. Konflik horizontal"], jawaban: 1, reasoning: "Perbedaan etnis termasuk diferensiasi sosial berbasis budaya." });
+    soalData.push({ tipe: "pg", teks: "Sosiologi membantu dalam perencanaan pembangunan karena dapat...", opsi: ["A. Menghitung angka kematian", "B. Menganalisis dampak sosial dari kebijakan", "C. Membuat pesawat terbang", "D. Meramal cuaca", "E. Memproduksi obat"], jawaban: 1, reasoning: "Sosiologi memberi pemahaman tentang dinamika sosial guna kebijakan yang tepat." });
+    soalData.push({ tipe: "pg", teks: "Proses sosial yang berbentuk pertentangan atau perjuangan disebut...", opsi: ["A. Akomodasi", "B. Asimilasi", "C. Konflik", "D. Kerja sama", "E. Akulturasi"], jawaban: 2, reasoning: "Konflik merupakan bentuk disosiatif yang bersifat antagonis." });
+    soalData.push({ tipe: "pg", teks: "Media sosial dapat mempengaruhi identitas diri seseorang melalui...", opsi: ["A. Genetik", "B. Interaksi virtual dan konstruksi citra diri", "C. Kondisi iklim", "D. Jenis kelamin tetap", "E. Golongan darah"], jawaban: 1, reasoning: "Media sosial membentuk identitas melalui interaksi dan presentasi diri." });
+
+    // --- 12 SOAL MCMA (Multiple Choice Multiple Answer) ---
+    // Format jawaban: array index [0,2,4] etc
+    soalData.push({ tipe: "mcma", teks: "Manakah yang termasuk agen sosialisasi formal? (Pilih semua yang benar)", opsi: ["A. Sekolah", "B. Keluarga", "C. Media massa", "D. Teman bermain", "E. Lembaga pelatihan kerja"], jawaban: [0,2,4], reasoning: "Sekolah, media massa, lembaga pelatihan kerja adalah agen sosialisasi formal (terstruktur). Keluarga dan teman lebih bersifat informal." });
+    soalData.push({ tipe: "mcma", teks: "Ciri-ciri kelompok sosial yang benar menurut sosiologi:", opsi: ["A. Adanya interaksi antar anggota", "B. Tidak memiliki kesadaran bersama", "C. Adanya ikatan dan struktur", "D. Bersifat sementara dan acak", "E. Tujuan bersama"], jawaban: [0,2,4], reasoning: "Kelompok sosial memiliki interaksi, kesadaran bersama, struktur, dan tujuan bersama." });
+    soalData.push({ tipe: "mcma", teks: "Faktor-faktor yang dapat menyebabkan perilaku menyimpang:", opsi: ["A. Pola asuh keluarga otoriter", "B. Pergaulan dengan kelompok menyimpang", "C. Ketaatan pada norma hukum", "D. Tekanan ekonomi", "E. Sosialisasi sempurna"], jawaban: [0,1,3], reasoning: "Pola asuh tidak sehat, pergaulan menyimpang, tekanan ekonomi bisa memicu penyimpangan, sedangkan ketaatan dan sosialisasi sempurna mencegah." });
+    soalData.push({ tipe: "mcma", teks: "Contoh stratifikasi sosial dalam masyarakat:", opsi: ["A. Pembagian kasta Brahmana, Ksatria", "B. Perbedaan warna kulit", "C. Golongan kaya, menengah, miskin", "D. Perbedaan bahasa daerah", "E. Status profesor dan mahasiswa"], jawaban: [0,2,4], reasoning: "Kasta, kelas ekonomi, dan status pendidikan/akademik menunjukkan pelapisan vertikal. Warna kulit & bahasa daerah lebih ke diferensiasi." });
+    soalData.push({ tipe: "mcma", teks: "Bentuk pengendalian sosial preventif dapat dilakukan melalui:", opsi: ["A. Penyuluhan hukum", "B. Menjatuhkan hukuman penjara", "C. Mengajarkan nilai agama sejak dini", "D. Membentuk peraturan RT secara partisipatif", "E. Memberi sanksi denda kepada pelanggar"], jawaban: [0,2,3], reasoning: "Preventif bersifat pencegahan sebelum terjadi pelanggaran (penyuluhan, pendidikan, pembuatan aturan). Sanksi penjara/denda bersifat represif." });
+    soalData.push({ tipe: "mcma", teks: "Yang termasuk identitas diri primer (ascribed status) adalah:", opsi: ["A. Jenis kelamin", "B. Pekerjaan", "C. Suku bangsa", "D. Gelar sarjana", "E. Tempat lahir"], jawaban: [0,2,4], reasoning: "Ascribed status diperoleh sejak lahir: jenis kelamin, suku, tempat lahir. Pekerjaan dan gelar adalah achieved status." });
+    soalData.push({ tipe: "mcma", teks: "Karakteristik diferensiasi sosial:", opsi: ["A. Bersifat vertikal (bertingkat)", "B. Bersifat horizontal", "C. Tidak membedakan tinggi rendah", "D. Contoh: perbedaan agama", "E. Membentuk kelas sosial"], jawaban: [1,2,3], reasoning: "Diferensiasi horizontal tidak bertingkat, contoh perbedaan agama, suku, gender. Stratifikasi bersifat vertikal." });
+    soalData.push({ tipe: "mcma", teks: "Manakah yang merupakan contoh tindakan sosial rasional instrumental?", opsi: ["A. Membeli motor karena kebutuhan transport efisien", "B. Menari hujan karena ritual leluhur", "C. Menabung untuk masa depan dengan perhitungan bunga", "D. Marah karena diprovokasi", "E. Mengerjakan tugas tepat waktu agar lulus ujian"], jawaban: [0,2,4], reasoning: "Rasional instrumental didasari perhitungan dan tujuan jelas. Menari tradisional (tradisional), marah (afektif)." });
+    soalData.push({ tipe: "mcma", teks: "Faktor-faktor yang mendorong mobilitas sosial vertikal:", opsi: ["A. Pendidikan", "B. Kasta tertutup", "C. Ekonomi yang membaik", "D. Diskriminasi sistemik", "E. Kemauan keras individu"], jawaban: [0,2,4], reasoning: "Pendidikan, ekonomi membaik, kemauan keras memungkinkan mobilitas. Kasta tertutup dan diskriminasi justru menghambat." });
+    soalData.push({ tipe: "mcma", teks: "Dampak positif dari pengendalian sosial adalah:", opsi: ["A. Menimbulkan ketakutan berlebihan", "B. Mencegah disintegrasi sosial", "C. Menciptakan kepastian hukum", "D. Menekan kreativitas individu", "E. Memperkuat norma yang berlaku"], jawaban: [1,2,4], reasoning: "Pengendalian sosial menjaga ketertiban, mencegah disintegrasi, memperkuat norma. Dampak negatifnya bisa menekan kebebasan, tetapi bukan selalu positif." });
+    soalData.push({ tipe: "mcma", teks: "Menurut George Herbert Mead, tahap pembentukan diri (self) meliputi:", opsi: ["A. Preparatory stage", "B. Play stage", "C. Game stage", "D. Generality stage", "E. Formal stage"], jawaban: [0,1,2], reasoning: "Tahap persiapan, bermain, dan permainan (game stage) adalah tiga tahap Mead. Tidak ada generality/formal stage." });
+    soalData.push({ tipe: "mcma", teks: "Contoh keragaman sosial yang termasuk diferensiasi profesi:", opsi: ["A. Petani", "B. Guru", "C. Suku Baduy", "D. Dokter", "E. Perempuan"], jawaban: [0,1,3], reasoning: "Petani, guru, dokter adalah jenis pekerjaan (profesi). Suku Baduy termasuk diferensiasi etnis, perempuan adalah gender." });
+
+    // --- 5 SOAL ESSAY ---
+    soalData.push({ tipe: "essay", teks: "Jelaskan pengertian sosialisasi dan sebutkan tiga agen sosialisasi primer beserta perannya masing-masing!", jawaban_acuan: "Sosialisasi adalah proses belajar nilai, norma, peran sosial seumur hidup. Agen primer: keluarga (mengajarkan nilai dasar), teman sebaya (belajar interaksi tanpa otoritas formal), sekolah (penanaman disiplin dan pengetahuan).", reasoning: "Sosialisasi membentuk kepribadian. Agen primer berpengaruh kuat pada anak." });
+    soalData.push({ tipe: "essay", teks: "Bedakan antara diferensiasi sosial dan stratifikasi sosial, berikan masing-masing dua contoh!", jawaban_acuan: "Diferensiasi sosial: pembedaan horizontal (tidak bertingkat), contoh: perbedaan agama, suku. Stratifikasi sosial: pelapisan vertikal (bertingkat), contoh: kelas atas-menengah-bawah, kasta.", reasoning: "Diferensiasi tidak memandang tinggi rendah, stratifikasi ada hirarki." });
+    soalData.push({ tipe: "essay", teks: "Apa yang dimaksud dengan perilaku menyimpang? Kemukakan dua teori penyebab perilaku menyimpang dan jelaskan singkat!", jawaban_acuan: "Perilaku menyimpang adalah tindakan melanggar norma. Teori anomie (Durkheim): kekacauan norma. Teori labelling (Becker): pelabelan negatif menimbulkan penyimpangan sekunder.", reasoning: "Penyimpangan dipengaruhi struktur sosial maupun reaksi masyarakat." });
+    soalData.push({ tipe: "essay", teks: "Jelaskan tiga tipe tindakan sosial menurut Max Weber selain tindakan rasional instrumental!", jawaban_acuan: "1) Tindakan rasional nilai (wertrational): berdasarkan nilai etika/estetika. 2) Tindakan afektif: dorongan emosi. 3) Tindakan tradisional: kebiasaan turun-temurun.", reasoning: "Weber membedakan tindakan berdasarkan orientasi aktor." });
+    soalData.push({ tipe: "essay", teks: "Mengapa identitas diri bersifat dinamis dan dapat berubah? Berikan contoh dari kehidupan di era digital!", jawaban_acuan: "Identitas diri dinamis karena interaksi sosial dan refleksi terus menerus. Di era digital, seseorang bisa memiliki identitas berbeda di media sosial (avatar, persona online) dibanding kehidupan nyata, serta perubahan peran (dari mahasiswa menjadi pekerja).", reasoning: "Interaksi dan perubahan peran sosial memungkinkan identitas berkembang." });
+
+    // verifikasi jumlah: 28 PG + 12 MCMA + 5 ESSAY = 45
+    // index pg dari 0-27 = 28, mcma 28-39=12, essay 40-44=5
+    // fungsi render
+    const container = document.getElementById("kuis-container");
+
+    function renderSoal() {
+        container.innerHTML = "";
+        soalData.forEach((soal, idx) => {
+            const card = document.createElement("div");
+            card.className = "soal-card";
+            const nomor = idx + 1;
+            let tipeLabel = "";
+            if (soal.tipe === "pg") tipeLabel = "PG (5 opsi)";
+            else if (soal.tipe === "mcma") tipeLabel = "MCMA (bisa >1 jawaban)";
+            else tipeLabel = "ESSAY";
+
+            let opsiHtml = "";
+            let jawabanUserArea = ""; // area untuk input jawaban user
+
+            if (soal.tipe === "pg") {
+                opsiHtml = `<div class="opsi">`;
+                soal.opsi.forEach((opt, optIdx) => {
+                    opsiHtml += `
+                        <div class="opsi-item">
+                            <input type="radio" name="q${idx}" value="${optIdx}" id="q${idx}_${optIdx}">
+                            <label for="q${idx}_${optIdx}">${opt}</label>
+                        </div>
+                    `;
+                });
+                opsiHtml += `</div>`;
+                jawabanUserArea = `<div style="margin-top:6px;"><small class="stat-badge" style="background:#f1f5f9;">Pilih satu jawaban</small></div>`;
+            } 
+            else if (soal.tipe === "mcma") {
+                opsiHtml = `<div class="opsi">`;
+                soal.opsi.forEach((opt, optIdx) => {
+                    opsiHtml += `
+                        <div class="opsi-item">
+                            <input type="checkbox" name="q${idx}" value="${optIdx}" id="q${idx}_chk_${optIdx}">
+                            <label for="q${idx}_chk_${optIdx}">${opt}</label>
+                        </div>
+                    `;
+                });
+                opsiHtml += `</div><div style="margin-top:4px;"><small>✔️ Bisa memilih lebih dari satu</small></div>`;
+                jawabanUserArea = "";
+            }
+            else { // essay
+                opsiHtml = `<textarea rows="3" placeholder="Tulis jawaban essay anda di sini..." id="essay_${idx}"></textarea>`;
+                jawabanUserArea = "";
+            }
+
+            const jawabanBoxId = `jawabanBox_${idx}`;
+
+            let jawabanBenarTeks = "";
+            if (soal.tipe === "pg") {
+                const benarIdx = soal.jawaban;
+                jawabanBenarTeks = `<strong>✅ Jawaban Benar:</strong> ${soal.opsi[benarIdx]}<br>`;
+            } else if (soal.tipe === "mcma") {
+                const benarIndices = soal.jawaban;
+                const benarOpsi = benarIndices.map(i => soal.opsi[i]).join(", ");
+                jawabanBenarTeks = `<strong>✅ Jawaban Benar (semua yang dipilih):</strong> ${benarOpsi}<br>`;
+            } else {
+                jawabanBenarTeks = `<strong>📝 Jawaban Acuan Essay:</strong><br> ${soal.jawaban_acuan}<br>`;
+            }
+
+            card.innerHTML = `
+                <div class="soal-header">
+                    <span class="soal-nomor">Soal ${nomor}</span>
+                    <span class="soal-tipe">${tipeLabel}</span>
+                </div>
+                <div class="soal-text">${soal.teks}</div>
+                ${opsiHtml}
+                ${jawabanUserArea}
+                <button class="btn-reveal" data-idx="${idx}">🔍 Tampilkan Jawaban & Reasoning</button>
+                <div id="${jawabanBoxId}" class="jawaban-box">
+                    ${jawabanBenarTeks}
+                    <strong>💡 Reasoning / Penjelasan:</strong><br> ${soal.reasoning}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // event listener untuk semua tombol reveal
+        document.querySelectorAll('.btn-reveal').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idx = btn.getAttribute('data-idx');
+                const box = document.getElementById(`jawabanBox_${idx}`);
+                if (box.style.display === 'none' || !box.style.display) {
+                    box.style.display = 'block';
+                    btn.textContent = '🙈 Sembunyikan Jawaban';
+                } else {
+                    box.style.display = 'none';
+                    btn.textContent = '🔍 Tampilkan Jawaban & Reasoning';
+                }
+            });
+        });
+    }
+
+    renderSoal();
+</script>
+</body>
+</html>
